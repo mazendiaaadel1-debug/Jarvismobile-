@@ -1,22 +1,88 @@
 workflows:
-  android-debug:
-    name: JARVIS Mobile Android Debug
+  jarvis-mobile-debug:
+    name: JARVIS Mobile - Debug APK
+    max_build_duration: 30
+    instance_type: linux_x2
 
     environment:
+      groups:
+        # Optional: create this group in Codemagic UI if you later add a
+        # release signing key (CM_KEYSTORE, CM_KEYSTORE_PASSWORD, etc).
+        # Safe to leave the group empty/unused for the debug workflow.
+        - keystore_credentials
+      android_signing:
+        # Only used by the release workflow below. Harmless if unset here.
+        - jarvis_mobile_release
       java: 17
 
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: "main"
+          include: true
+      cancel_previous_builds: true
+
     scripts:
-      - name: Make Gradle wrapper executable
+      - name: Set execute permission for gradlew
         script: |
           chmod +x ./gradlew
 
-      - name: Clean project
-        script: |
-          ./gradlew clean
-
-      - name: Build Android Debug APK
+      - name: Build debug APK
         script: |
           ./gradlew assembleDebug --stacktrace
 
     artifacts:
       - app/build/outputs/apk/debug/*.apk
+      - app/build/outputs/**/mapping.txt
+      - app/build/reports
+
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
+        notify:
+          success: true
+          failure: true
+
+  jarvis-mobile-release:
+    name: JARVIS Mobile - Signed Release APK
+    max_build_duration: 30
+    instance_type: linux_x2
+
+    environment:
+      groups:
+        - keystore_credentials
+      android_signing:
+        - jarvis_mobile_release
+      java: 17
+
+    triggering:
+      events:
+        - tag
+      tag_patterns:
+        - pattern: "v*.*.*"
+          include: true
+      cancel_previous_builds: true
+
+    scripts:
+      - name: Set execute permission for gradlew
+        script: |
+          chmod +x ./gradlew
+
+      - name: Build signed release APK
+        script: |
+          ./gradlew assembleRelease --stacktrace
+
+    artifacts:
+      - app/build/outputs/apk/release/*.apk
+      - app/build/outputs/**/mapping.txt
+      - app/build/reports
+
+    publishing:
+      email:
+        recipients:
+          - your-email@example.com
+        notify:
+          success: true
+          failure: true
