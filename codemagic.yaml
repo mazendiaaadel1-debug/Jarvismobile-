@@ -12,7 +12,7 @@ workflows:
         - keystore_credentials
       android_signing:
         # Only used by the release workflow below. Harmless if unset here.
-        - jarvis-mobile-debug
+        - jarvis-mobile-release
       java: 17
 
     triggering:
