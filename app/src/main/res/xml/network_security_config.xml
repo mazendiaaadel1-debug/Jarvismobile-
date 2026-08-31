@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  JARVIS PC dashboard defaults to plain HTTP/WS on the LAN (see
+  dashboard/server.py — HTTPS is optional, self-signed when enabled).
+
+  Android's network-security-config <domain> tag only matches hostnames, not
+  CIDR ranges — there is no config-only way to scope cleartext to "any LAN
+  IP". We take the honest, documented approach instead: cleartext is allowed
+  globally (base-config), which matches what plain "http://<lan-ip>:8000"
+  pairing actually requires, and PairingActivity is the enforcement point —
+  it refuses to accept a pairing target that isn't the private IP ranges
+  (192.168/10.0.0.0/8 in PairingActivity) chosen by the user during pairing,
+  so the app never opens an arbitrary cleartext connection on its own.
+  If the user enables HTTPS on the PC (config/certs/), PairingActivity
+  switches to wss:// automatically — no manifest change needed.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+            <!-- user-added anchor lets the app trust the PC's self-signed
+                 cert when HTTPS mode is on, without disabling system CA checks -->
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

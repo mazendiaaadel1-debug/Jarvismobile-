@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">JARVIS Mobile</string>
+    <string name="accessibility_service_description">
+        Lets your paired JARVIS desktop assistant tap, swipe, and type on your
+        behalf when you ask it to control an app on this phone. Only commands
+        from your paired PC are accepted, and only after you approve pairing.
+    </string>
+    <string name="pairing_title">Connect to JARVIS</string>
+    <string name="pairing_hint">Enter the 6-digit code shown on your computer</string>
+    <string name="status_disconnected">Disconnected</string>
+    <string name="status_connected">Connected</string>
+    <string name="enable_accessibility_prompt">
+        JARVIS Mobile needs Accessibility permission to tap, swipe, and type on
+        your behalf. This is optional — pairing, status, app-opening, volume,
+        and navigation work without it.
+    </string>
+</resources>
