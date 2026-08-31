@@ -1,0 +1,22 @@
+workflows:
+  android-debug:
+    name: JARVIS Mobile Android Debug
+
+    environment:
+      java: 17
+
+    scripts:
+      - name: Make Gradle wrapper executable
+        script: |
+          chmod +x ./gradlew
+
+      - name: Clean project
+        script: |
+          ./gradlew clean
+
+      - name: Build Android Debug APK
+        script: |
+          ./gradlew assembleDebug --stacktrace
+
+    artifacts:
+      - app/build/outputs/apk/debug/*.apk
