@@ -40,7 +40,7 @@ workflows:
     publishing:
       email:
         recipients:
-          - your-email@example.com
+          - mazeniaaadel1@gmail.com
         notify:
           success: true
           failure: true
@@ -82,7 +82,7 @@ workflows:
     publishing:
       email:
         recipients:
-          - your-email@example.com
+          - mazendiaaadel1@gmail.com
         notify:
           success: true
           failure: true
