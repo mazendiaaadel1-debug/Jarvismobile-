@@ -2,7 +2,7 @@ workflows:
   jarvis-mobile-debug:
     name: JARVIS Mobile - Debug APK
     max_build_duration: 30
-    instance_type: linux_x2
+    instance_type: linux
 
     environment:
       java: 17
@@ -40,7 +40,7 @@ workflows:
   jarvis-mobile-release:
     name: JARVIS Mobile - Signed Release APK
     max_build_duration: 30
-    instance_type: linux_x2
+    instance_type: linux
 
     environment:
       groups:
