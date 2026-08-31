@@ -2,8 +2,7 @@ workflows:
   jarvis-mobile-debug:
     name: JARVIS Mobile - Debug APK
     max_build_duration: 30
-    instance_type: linux
-
+    instance_type: mac_mini_m2
     environment:
       java: 17
 
